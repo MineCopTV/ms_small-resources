@@ -40,10 +40,37 @@ local ignoredTypes = {
     "bcsoVapidCaraU",
     "bcsoVapidScoutU",
 }
+local groundHashes = {
+    510490462,
+    -1907520769,
+    2128369009,
+    1925605558,
+    951832588,
+    -1286696947,
+    765206029,
+    -1595148316,
+    
+}
 
 -- Script
 local default = true
 local slowdown = false
+
+function GetGroundHash(ped)
+    local posped = GetEntityCoords(ped)
+    local num = StartShapeTestCapsule(posped.x, posped.y, posped.z + 4, posped.x, posped.y, posped.z - 2.0, 2, 1, ped, 7)
+    local arg1, arg2, arg3, arg4, arg5 = GetShapeTestResultEx(num)
+    return arg5
+end
+
+function IsIgnoredGround(hash)
+    for index, value in ipairs(groundHashes) do
+        if value == hash then
+            return false
+        end
+    end
+    return true
+end
 
 function IsIgnoredClass(vehicle)
     for index, value in ipairs(ignoredClasses) do
@@ -71,8 +98,10 @@ CreateThread(function()
         if GetVehiclePedIsIn(ped, false) ~= 0 then
             local vehicle = GetVehiclePedIsIn(ped, false)
             local coords = GetEntityCoords(ped)
-            -- print(IsPointOnRoad(coords.x, coords.y, coords.z, vehicle), IsIgnoredClass(GetVehicleClass(vehicle)), IsIgnoredType(vehicle))
-            if not IsPointOnRoad(coords.x, coords.y, coords.z, vehicle) and not IsIgnoredClass(vehicle) and not IsIgnoredType(vehicle) then
+            local hash = GetGroundHash(ped)
+            print(hash)
+            print(IsPointOnRoad(coords.x, coords.y, coords.z, vehicle), IsIgnoredClass(GetVehicleClass(vehicle)), IsIgnoredType(vehicle), IsIgnoredGround(hash))
+            if not IsPointOnRoad(coords.x, coords.y, coords.z, vehicle) and not IsIgnoredClass(vehicle) and not IsIgnoredType(vehicle) and not IsIgnoredGround(hash) then
                 sleep = 400
                 if default ~= false then
                     local speed = GetEntitySpeed(vehicle) + 4.5
