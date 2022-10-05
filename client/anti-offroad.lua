@@ -40,6 +40,7 @@ local ignoredTypes = {
     "bcsoVapidCaraU",
     "bcsoVapidScoutU",
 }
+-- Ground hashes
 local groundHashes = {
     510490462,
     -1907520769,
@@ -49,7 +50,6 @@ local groundHashes = {
     -1286696947,
     765206029,
     -1595148316,
-    
 }
 
 -- Script
