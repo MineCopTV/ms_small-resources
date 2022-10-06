@@ -21,7 +21,7 @@ local weapons = {
     WEAPON_POOLCUE = 1.0,
     WEAPON_STONE_HATCHET = 1.0,
     -- Handguns
-    WEAPON_PISTOL = 0.2,
+    WEAPON_PISTOL = 0.02,
     WEAPON_PISTOL_MK2 = 0.5,
     WEAPON_COMBATPISTOL = 0.35,
     WEAPON_APPISTOL = 0.15,
@@ -139,7 +139,7 @@ local legsBones = {
     [35502] = true,
 }
 -- Chest (Chance in percent)
-local chestRagdollChance = 20
+local chestRagdollChance = 100
 local chestProtectBulletproofs = {
     male = {},
     female = {}
@@ -164,7 +164,7 @@ local chestBones = {
     [45750] = true,
 }
 -- Head (Chance in percent)
-local headDazzleChance = 40
+local headDazzleChance = 80
 local headProtectHelmets = {
     male = {},
     female = {}
@@ -177,6 +177,7 @@ local headBones = {
 }
 
 -- Script
+local shooted = false
 function bool(arg) 
     return arg == 1 or arg == true 
 end
@@ -207,17 +208,23 @@ function realShooting(ped)
         local chance = math.random(100)
         if headBones[bone] and chance <= headDazzleChance then
             if isProtected(ped, headProtectHelmets, GetPedPropIndex(ped, 0)) then return end
+            shooted = true
             SetPedToRagdoll(ped, 1200, 1200, 0, 0, 0, 0)
             DoScreenFadeOut(150)
             Wait(900)
             DoScreenFadeIn(150)
         elseif chestBones[bone] and chance <= chestRagdollChance then
             if isProtected(ped, chestProtectBulletproofs, GetPedDrawableVariation(ped, 9)) then return end
+            shooted = true
             SetPedToRagdoll(ped, 750, 750, 0, 0, 0, 0)
         elseif legsBones[bone] and chance <= legsRagdollChance then
             if isProtected(ped, legsProtectPants, GetPedDrawableVariation(ped, 4)) then return end
+            shooted = true
             SetPedToRagdoll(ped, 1500, 1500, 0, 0, 0, 0)
         end
+        if not shooted then return end
+        Wait(3000)
+        shooted = false
     end
 end
 
@@ -237,10 +244,10 @@ Citizen.CreateThread(function()
     if realEffects then
         while true do 
             local ped = PlayerPedId()
-            if HasEntityBeenDamagedByAnyPed(ped) and not IsEntityDead(ped) then
+            if HasEntityBeenDamagedByAnyPed(ped) and not IsEntityDead(ped) and not shooted then
                 realShooting(ped)
-                ClearEntityLastDamageEntity(ped)
             end
+            ClearEntityLastDamageEntity(ped)
             Wait(100)
         end
     end
