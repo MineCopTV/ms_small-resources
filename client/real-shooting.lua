@@ -117,7 +117,7 @@ local weapons = {
 }
 local realEffects = true
 -- Legs (Chance in percent)
-local legsRagdollChance = 35
+local legsRagdollChance = 45
 local legsProtectPants = {
     male = {},
     female = {}
@@ -139,7 +139,7 @@ local legsBones = {
     [35502] = true,
 }
 -- Chest (Chance in percent)
-local chestRagdollChance = 100
+local chestRagdollChance = 35
 local chestProtectBulletproofs = {
     male = {},
     female = {}
@@ -223,7 +223,7 @@ function realShooting(ped)
             SetPedToRagdoll(ped, 1500, 1500, 0, 0, 0, 0)
         end
         if not shooted then return end
-        Wait(3000)
+        Wait(4000)
         shooted = false
     end
 end
