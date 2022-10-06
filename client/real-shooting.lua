@@ -21,7 +21,7 @@ local weapons = {
     WEAPON_POOLCUE = 1.0,
     WEAPON_STONE_HATCHET = 1.0,
     -- Handguns
-    WEAPON_PISTOL = 0.02,
+    WEAPON_PISTOL = 0.2,
     WEAPON_PISTOL_MK2 = 0.5,
     WEAPON_COMBATPISTOL = 0.35,
     WEAPON_APPISTOL = 0.15,
@@ -229,7 +229,7 @@ function realShooting(ped)
 end
 
 Citizen.CreateThread(function()
-	while true do
+    while true do
         local ped = PlayerPedId()
         SetPedSuffersCriticalHits(ped, false)
 		for weapon, multiplier in pairs(weapons) do
