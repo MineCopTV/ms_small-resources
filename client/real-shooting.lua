@@ -33,7 +33,7 @@ local weapons = {
         WEAPON_STONE_HATCHET = 1.0
     },
     [416676503] = {
-        WEAPON_PISTOL = 0.02,
+        WEAPON_PISTOL = 0.2,
         WEAPON_PISTOL_MK2 = 0.5,
         WEAPON_COMBATPISTOL = 0.35,
         WEAPON_APPISTOL = 0.15,
