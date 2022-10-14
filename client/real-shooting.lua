@@ -254,14 +254,12 @@ if weaponRealMovement then
             SetWeaponDamageModifier(-1553120962, 0.0)
             if IsPedArmed(ped, 7) then
                 if IsControlPressed(0, 25) then
-                    DisableControlAction(1, 21, true)
-                    DisableControlAction(1, 34, true)
-                    DisableControlAction(1, 35, true)
+                    DisableControlAction(0, 21, true)
+                    DisableControlAction(0, 22, true)
                 end
-                DisableControlAction(1, 140, true)
-				DisableControlAction(1, 141, true)
-				DisableControlAction(1, 142, true)
-                DisableControlAction(1, 22, true)
+                DisableControlAction(0, 140, true)
+				DisableControlAction(0, 141, true)
+				DisableControlAction(0, 142, true)
             end
             if weaponRealTaser then
                 SetPedMinGroundTimeForStungun(ped, 15000)
